@@ -1,2 +1,3 @@
 # dataScience-at-scale
-Assignments Dasa Science at Scale
+Assignments Data Science at Scale
+for temporary use only
