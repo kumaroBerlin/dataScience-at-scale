@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+  
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
+  <title></title>
+
+  
+  
+  <meta name="GENERATOR" content="OpenOffice 4.1.1  (Win32)">
+
+  
+  <meta name="AUTHOR" content="Rolf Kaschke">
+
+  
+  <meta name="CREATED" content="20160406;10251202">
+
+  
+  <meta name="CHANGEDBY" content="Rolf Kaschke">
+
+  
+  <meta name="CHANGED" content="20160406;20084446">
+
+  
+  <style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+		H1 { margin-bottom: 0.21cm }
+		H1.western { font-family: "Times New Roman", serif }
+		H1.cjk { font-family: "SimSun" }
+		H1.ctl { font-family: "Arial" }
+		H4 { margin-bottom: 0.21cm }
+		H4.cjk { font-family: "SimSun" }
+		H4.ctl { font-family: "Arial" }
+		TD P margin-bottom: 0cm }
+		.frame {
+		      width: 800px;
+		      margin-left: 25px;
+			  mac-width: 800px;
+	    }
+	-->
+	</style>
+</head><body dir="ltr" lang="de-DE">
+<div class="frame">
+<h1 class="western"><font color="#0000cc">Communicating Data Science
+Results</font></h1>
+<div id="header" dir="ltr">
+<h4 class="western"><em>Rolf-Dieter Kaschke</em></h4>
+<h4 class="western"><em>April 6, 2016</em></h4>
+</div>
+<p><br>
+<br>
+</p>
+<p><font color="#0000cc">„<font face="Arial, sans-serif"><font size="3">In
+this assignment, you will analyze criminal incident data from Seattle
+or San Francisco to visualize patterns and, if desired, contrast and
+compare patterns across the two cities.“</font></font></font></p>
+<p><br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3">For this assignment I
+take the San Francisco Dates as provided by coursera. My opinion is,
+that unless the examples in the course, it makes mostly no sense to
+provide vizualisations with many dimensions of data, unless you color
+them or not. Visualization always is strongly related with the goal I
+want to express. Maybe in scientific work it helps to find patterns
+unseen in the data, but this isn't asked in the assignment. So my
+approach is to bring some different, low dimensional data graphs with
+a clear direction.</font></font></p>
+<p><br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3">When I looked first at
+the data, it seems that all common interesting data are ordinal (or
+nominal). This includes the crime category „Category“,
+the associated police department „<span style="text-decoration: none;"><span style="font-style: normal;"><span style="font-weight: normal;"><span style="text-decoration: none;">PdDistrict“,
+the result „Resolution“ and all adress related data, like
+„Address“ or „Location“. The other
+interesting data are related to date and time. If we don´t want
+to identify a single event, like f.i. The crime rate at Christmas, it
+is better to cluster time to time frames. That is done by cluster
+them the categorial variables „Monday“, „Tuesday“
+… „Sunday“ and time intervals of 4 hours.</span></span></span></span></font></font></p>
+<p><br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3"><span style="text-decoration: none;"><span style="font-style: normal;"><span style="font-weight: normal;"><span style="text-decoration: none;">To
+fulfill my assignment I used R, mainly to prepare the data and to
+plot them.</span></span></span></span></font></font></p>
+<p><br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3"><span style="text-decoration: none;"><span style="font-style: normal;"><span style="font-weight: normal;"><span style="text-decoration: none;">The
+first diagram I made is a histogram of crime occurences:</span></span></span></span></font></font></p>
+<p><br>
+<br>
+</p>
+<p><img src="Solution_html_77178f4d.gif" name="Grafik1" align="left" border="0" height="355" width="503"><br clear="left">
+<br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3">To be a little bit
+tech here – the plot was done in R by:</font></font></p>
+<p><br>
+<br>
+</p>
+<p><font face="Courier New, monospace"><font size="3">crime_occurences
+= table(data$Category)</font></font></p>
+<p><font face="Courier New, monospace"><font size="3">hist(crime_occurences,
+main = "Histogram of crime occurences", axes=TRUE)</font></font></p>
+<p><br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3">This graph shows the
+number of crimes per crime type as a histogram. What is wrong for the
+casual viewer. A viewer expects to understand what is expressed in
+the graph. So he want to see as labels of the x-axis the name of
+crime and the sum of occurences. But this is not was a histogram
+expresses. Here you can see, that crime types occuring all in all
+10000 times, occures 1 times, while crime types that are in the range
+from 0 to 1000 occurrences occures most, 25 times. For a scientific
+view it may help, for a casual user this gives us not much
+information. To improve that I create a short list for explanation:</font></font></p>
+<p><br>
+<br>
+</p>
+<table border="1" bordercolor="#000000" cellpadding="4" cellspacing="0" width="100%">
+  <col width="128*"> <col width="128*"> <tbody>
+    <tr valign="top">
+      <td width="50%">
+      <p><font face="Arial, sans-serif"><font size="3">Number of
+different crime types:</font></font></p>
+      </td>
+      <td sdval="34" sdnum="1031;" width="50%">
+      <p><font face="Arial, sans-serif"><font size="3">34</font></font></p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="50%">
+      <p><font face="Arial, sans-serif"><font size="3">Number of all
+crimes:</font></font></p>
+      </td>
+      <td sdval="28993" sdnum="1031;" width="50%">
+      <p><font face="Arial, sans-serif"><font size="3">28993</font></font></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3">The number of all
+crimes can be found by </font></font>
+</p>
+<p><font face="Courier New, monospace"><font size="3">summary(data$Category)</font></font></p>
+<p><font face="Arial, sans-serif"><font size="3">and the number of all
+crime types („Category“) by </font></font>
+</p>
+<p><font face="Courier New, monospace"><font size="3">str(factor(data$Category))</font></font></p>
+<p><br>
+<br>
+</p>
+<p><font face="Arial, sans-serif"><font size="3">No it is more clear
+what our graph says: We have 34 distinct crime types and 28993
+occurences all in all, one crime type with 10000 occurences occur one
+time.</font></font></p>
+<p><br>
+<br>
+</p>
+<p><img src="Solution_html_2ba656d4.gif" name="Grafik2" align="left" border="0" height="355" width="503"><br clear="left">
+<font face="Arial, sans-serif"><font size="3">But
+I think that is not so interesting, so I decided to plot the crime
+type versus time. As I statet above I converted the time/date
+combination to an interval of 1 hours independent for of the days of
+a week. This gives a nice histogram where you can see the peaks of
+crimes in the time intervals. Of course this can be plotted more
+differentiated when we use a time frame of one hour, but the result
+lacks in clarity.</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">Did
+you realize the peak at 5PM and 0:00AM. You are more secure if you
+went home at 4AM.</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">This
+plot was done by the R command:</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Courier New, monospace"><font size="3">hist(data$time_num,
+breaks=24, xlim=c(0, 25), </font></font>
+</p>
+<p style="margin-bottom: 0cm;"> <font face="Courier New, monospace"><font size="3">xlab="Time
+(in hours)", ylab="Crime occurences", main="Occurences
+of crime by daytime")</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">while data$time_num was created by a split at „:“ of the time
+and normalization to an interval of an hour.</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">This
+diagram can be made more interesting by colors, but I don´t
+like to do so as I think it is clear enough.</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">Can
+we find more information from the data and plot them?</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">I
+think yes.</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">So
+I think perhaps it is useful to know the percent of occurences of the
+top 5 crime types. I abbreviated the categories to get them plotted
+apropriate.</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><img src="Solution_html_40e0a934.jpg" name="Grafik3" align="left" border="0" height="436" width="619"><br clear="left">
+<br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">Next
+I clustered as mentioned above the crime timestamp into intervals of
+4 hours and plotted 9 more often crime types (normalized) as a line
+plot. With this graph you can see the occurences of different crime
+types at specific time. So you can distinguish the different crimes.
+I plotted only some crime types. With more types it gets more
+unclear.</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">As
+you can see there is a general time depencence of crimes with some
+little differences.</font></font></p>
+<p style="margin-bottom: 0cm;"><img src="Solution_html_6c96b273.jpg" name="Grafik4" align="left" border="0" height="436" width="619"><br clear="left">
+<br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">This
+plot was done by normalizing the different crime types as f.e. </font></font>
+</p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">l<font face="Courier New, monospace">arcency
+&lt;-
+table(data[data$Category=='LARCENY/THEFT',]$time_cat)/sum(data$Category=='LARCENY/THEFT')</font></font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">and
+the plot</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Courier New, monospace"><font size="3">plot(0:max,
+larcency, type="l", col=1, axes=FALSE,</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Courier New, monospace"><font size="3"> ylab="Percent of Category", ylim=c(0,0.35),</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Courier New, monospace"><font size="3"> xlab="Hour of the Day", main="Percent of Crime by Time
+of Day")</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Courier New, monospace"><font size="3">axis(2,
+at=(0:7)/100*5, tick=TRUE)</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">The
+last diagram I produced is a mosaic plot. The variables I useed are
+the categories of crime, their occurencies, the PdDistrict and the
+occurences in these districts:</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><img src="Solution_html_m168ee7c3.jpg" name="Grafik5" align="left" border="0" height="436" width="619"><br clear="left">
+<br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">It
+is really not possible to make a suitable graph with all PdDistricts
+and the categories together with the pearson residuals (as calculated
+by the mosaic). Als if I only 5 combinations of the data above the
+diagram</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><img src="Solution_html_409bf63b.jpg" name="Grafik6" align="left" border="0" height="436" width="619"><br clear="left">
+<br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">is
+not very helpful. The information inside is very interesting, but to
+understand the graph as presented needs to much explanations to gain
+insights. But for scientific purposes it is, maybe, very interesting
+and useful. If we look for insights of partial combinations of
+Category vs. PdDepartment (by filtering out these combinations) would
+be a better choose.</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">The
+corresponding R code for the mosaic is:</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Courier New, monospace"><font size="3">comb
+&lt;- data[,c("Category","PdDistrict")]</font></font></p>
+<p style="margin-bottom: 0cm;"><font face="Courier New, monospace"><font size="3">mosaic(table(comb1),
+shade=TRUE) </font></font>
+</p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">or
+the cutted dataframe by <font face="Courier New, monospace">comb[1:5,,]</font></font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="3">As
+usual there are a lot of other possibilities to investigate the data,
+but as this is a visualization assignment and not a R course I stop
+here. The graphs offered are useful, but for a dashboard for
+management I wouldn't use R as it seems to be too scientific in
+presentation.</font></font></p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<p style="margin-bottom: 0cm;"><br>
+</p>
+<div>
+</div>
+</div>
+
+</body></html>
